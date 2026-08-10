@@ -1,24 +1,29 @@
 package com.hong.aesthetic_clinic_api.domain.dtos;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
+import com.hong.aesthetic_clinic_api.domain.UserStatus;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
+
+import java.time.Instant;
 import java.util.UUID;
 
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
-@Builder
-public class BranchesDto {
-    private UUID id;
-    private String name;
-    private String address;
-    private Integer status;
-    private LocalDateTime updated_at;
-    private LocalDateTime deleted_at;
+public class BranchesDtos {
+    public record BranchRequest(
+            @NotBlank @Size(max = 150) String name,
+            @Size(max = 30) String phone,
+            String address,
+            UserStatus status
+    ){}
+    public record BranchResponse(
+            UUID id,
+            String name,
+            String phone,
+            String address,
+            UserStatus status,
+            Instant createdAt,
+            Instant updatedAt
+    ){}
 }
 //id uuid
 //name varchar 150
