@@ -1,6 +1,7 @@
 package com.hong.aesthetic_clinic_api.domain.dtos;
 
 
+import com.hong.aesthetic_clinic_api.domain.BranchStatus;
 import com.hong.aesthetic_clinic_api.domain.UserStatus;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -13,17 +14,23 @@ public class BranchesDtos {
             @NotBlank @Size(max = 150) String name,
             @Size(max = 30) String phone,
             String address,
-            UserStatus status
+            BranchStatus status
     ){}
     public record BranchResponse(
             UUID id,
             String name,
             String phone,
             String address,
-            UserStatus status,
+            BranchStatus status,
             Instant createdAt,
             Instant updatedAt
     ){}
+//    public record BranchesDto(
+//            @Size(max = 150) String name,
+//            @Size(max = 30) String phone,
+//            String address,
+//            BranchStatus status
+//    ) {}
 }
 //id uuid
 //name varchar 150

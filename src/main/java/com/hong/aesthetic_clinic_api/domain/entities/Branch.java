@@ -1,5 +1,6 @@
 package com.hong.aesthetic_clinic_api.domain.entities;
 
+import com.hong.aesthetic_clinic_api.domain.BranchStatus;
 import com.hong.aesthetic_clinic_api.domain.UserStatus;
 import jakarta.persistence.*;
 import lombok.*;
@@ -31,7 +32,7 @@ public class Branch {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private UserStatus status;
+    private BranchStatus status;
 
     @Column(name = "created_at",updatable = false)
     private Instant createdAt;
@@ -44,7 +45,7 @@ public class Branch {
         Instant now = Instant.now();
         createdAt =now;
         updatedAt = now;
-        if(status==null) status = UserStatus.ACTIVE;
+        if(status==null) status = BranchStatus.ACTIVE;
     }
     @PreUpdate
     protected  void onUpdate(){
