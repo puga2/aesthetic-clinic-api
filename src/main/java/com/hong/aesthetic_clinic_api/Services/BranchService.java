@@ -12,6 +12,7 @@ public interface BranchService {
     BranchesDtos.BranchResponse createBranch(CreateBranchRequest dto);
     BranchesDtos.BranchResponse getByIdBranch(UUID id);
     List<BranchesDtos.BranchResponse> getAllBranch();
-    List<BranchesDtos.BranchResponse> ListActiveBranches();
-    BranchesDtos.BranchResponse UpdateBranch(UUID id,BranchesDtos.BranchRequest dto);
+    List<BranchesDtos.BranchResponse> listActiveBranches();
+    BranchesDtos.BranchResponse updateBranch(UUID id,BranchesDtos.BranchRequest dto);
+    void deleteBranch(UUID id);
 }
