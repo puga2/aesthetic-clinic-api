@@ -7,6 +7,7 @@ import lombok.*;
 import org.apache.catalina.User;
 
 import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
@@ -18,7 +19,7 @@ import java.util.UUID;
 @Builder
 public class Branch {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.UUID)
     @Column(columnDefinition = "uuid",updatable = false,nullable = false)
     private UUID id;
 
@@ -35,21 +36,21 @@ public class Branch {
     private BranchStatus status;
 
     @Column(name = "created_at",updatable = false)
-    private Instant createdAt;
+    private LocalDateTime createdAt;
 
     @Column(name ="updated_at")
-    private Instant updatedAt;
+    private LocalDateTime updatedAt;
 
     @PrePersist
     protected void onCreate(){
-        Instant now = Instant.now();
+        LocalDateTime now = LocalDateTime.now();
         createdAt =now;
         updatedAt = now;
         if(status==null) status = BranchStatus.ACTIVE;
     }
     @PreUpdate
     protected  void onUpdate(){
-        updatedAt = Instant.now();
+        updatedAt = LocalDateTime.now();
     }
 
 

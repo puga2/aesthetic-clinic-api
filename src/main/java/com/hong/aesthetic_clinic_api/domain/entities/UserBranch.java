@@ -21,7 +21,7 @@ public class UserBranch {
 
     @ManyToOne(fetch = FetchType.LAZY,optional = false)
     @JoinColumn(name = "user_id")
-    private User user;
+//    private User user;
 
     @ManyToOne(fetch = FetchType.LAZY,optional = false)
     @JoinColumn(name = "branch_id")
