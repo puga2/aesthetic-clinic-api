@@ -3,9 +3,11 @@ package com.hong.aesthetic_clinic_api.domain.dtos;
 import com.hong.aesthetic_clinic_api.domain.UserStatus;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -26,6 +28,16 @@ public class UserDtos {
     public record UserResponse(
             UUID id, UUID branchId, String username, String email,
             String fullName, String phone, UserStatus status,
-            List<String>roles, Instant createdAt,Instant updatedAt
+            List<String>roles, LocalDateTime createdAt, LocalDateTime updatedAt
     ){}// no password field, ever
+
+    public record RegisterRequest(
+            @NotNull UUID branchId,
+            @NotBlank @Size(max = 100)String username,
+            @NotBlank @Email @Size(max = 150)String email,
+            @NotBlank @Size(min =  8,max = 72)String password,
+            @NotBlank @Size(max = 150) String fullName,
+            @Size(max = 30)String phone
+
+            ){}
 }

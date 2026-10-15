@@ -7,6 +7,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
 import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 public class BranchesDtos {
@@ -22,8 +23,8 @@ public class BranchesDtos {
             String phone,
             String address,
             BranchStatus status,
-            Instant createdAt,
-            Instant updatedAt
+            LocalDateTime createdAt,
+            LocalDateTime updatedAt
     ){}
 //    public record BranchesDto(
 //            @Size(max = 150) String name,

@@ -45,6 +45,7 @@ public class JwtAuthenticationFilter  extends OncePerRequestFilter {
 
             log.warn("Received invalid auth token");
         }
+        filterChain.doFilter(request,response);
     }
     private String extractToken(HttpServletRequest request){
         String bearerToken = request.getHeader("Authorization");

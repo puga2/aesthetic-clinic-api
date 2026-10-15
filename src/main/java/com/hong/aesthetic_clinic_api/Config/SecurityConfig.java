@@ -1,7 +1,11 @@
 package com.hong.aesthetic_clinic_api.Config;
 
 import com.hong.aesthetic_clinic_api.Services.AuthenticationService;
+import com.hong.aesthetic_clinic_api.domain.UserRole;
+import com.hong.aesthetic_clinic_api.domain.UserStatus;
+import com.hong.aesthetic_clinic_api.domain.entities.Branch;
 import com.hong.aesthetic_clinic_api.domain.entities.User;
+import com.hong.aesthetic_clinic_api.repositories.BranchRepository;
 import com.hong.aesthetic_clinic_api.repositories.UserRepository;
 import com.hong.aesthetic_clinic_api.security.ClinicUserDetailsService;
 import com.hong.aesthetic_clinic_api.security.JwtAuthenticationFilter;
@@ -27,18 +31,34 @@ public class SecurityConfig {
         return new JwtAuthenticationFilter(authenticationService);
     }
     @Bean
-    public UserDetailsService userDetailsService(UserRepository userRepository){
+    public UserDetailsService userDetailsService(UserRepository userRepository, BranchRepository branchRepository){
         ClinicUserDetailsService clinicUserDetailsService = new ClinicUserDetailsService(userRepository);
 
         String email = "super@test.com";
         userRepository.findByEmail(email).orElseGet(()->{
+            Branch branch = branchRepository.findAll().stream().findFirst()
+                    .orElseGet(()->branchRepository.save(
+                            Branch.builder()
+                                    // set any other required Branch fields here
+                                    .name("Head Office")
+                                    .phone("078868213")
+                                    .address("PhnomPenh")
+                                    .build()
+                    ));
             User newUser = User.builder()
                     .fullName("Kim hongTest")
                     .email(email)
+                    .username(email)
                     .password(passwordEncoder().encode("password"))
+                    .role(UserRole.SUPERADMIN)
+                    .status(UserStatus.ACTIVE)
+                    .branch(branch)
                     .build();
             return  userRepository.save(newUser);
-
+//   .username(email)                 // required by getUsername()
+//                    .password(passwordEncoder().encode("password"))
+//                    .role(Role.SUPER_ADMIN)          // use your real enum value
+//                    .status(UserStatus.ACTIVE)
         });
         return clinicUserDetailsService;
     }
@@ -58,6 +78,7 @@ public class SecurityConfig {
                         ).permitAll()
 
                         // Allow Branch endpoints while developing Branch module
+                        .requestMatchers("/api/v1/auth/**").permitAll()
                         .requestMatchers("/api/v1/branches/**").permitAll()
 
                         // Optional: permit any request until Auth is implemented
